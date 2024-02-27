@@ -1,22 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Popup from './Popup';
 
 function App() {
+  const [showPopup, setShowPopup] = useState(false);
+  const [offerApplied, setOfferApplied] = useState(false);
+  const [offerCode, setOfferCode] = useState('');
+
+  const handleApplyOffer = () => {
+    console.log('Offer code applied:', offerCode);
+    setOfferApplied(true);
+    setShowPopup(false);
+  };
+
+  const handleOpenPopup = () => {
+    setShowPopup(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="App w-full h-screen flex justify-center items-center">
+      <header className="App-header ">
+
+        <button onClick={handleOpenPopup} className="bg-sky-800 text-white px-4 py-2 rounded hover:bg-sky-900">Apply Offer</button>
+        {showPopup && (
+          <Popup
+            onClose={() => setShowPopup(false)}
+            onApply={handleApplyOffer}
+          />
+        )}
+        {offerApplied && <p>Offer code applied successfully!</p>}
       </header>
     </div>
   );
